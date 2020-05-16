@@ -15,6 +15,15 @@ class TransactionList extends StatelessWidget {
             children: <Widget>[
               Text('No Transactions Added',
                   style: Theme.of(context).textTheme.headline6),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                  height: 200,
+                  child: Image.asset(
+                    'assets/images/flower.jpg',
+                    fit: BoxFit.cover,
+                  )),
             ],
           )
         : ListView.builder(
@@ -28,7 +37,7 @@ class TransactionList extends StatelessWidget {
                   leading: CircleAvatar(
                     radius: 30,
                     child: Padding(
-                      padding: const EdgeInsets.all(6.0),
+                      padding: EdgeInsets.all(6),
                       child: FittedBox(
                         child: Text(
                             '${transactions[index].amount.toStringAsFixed(2)}'),

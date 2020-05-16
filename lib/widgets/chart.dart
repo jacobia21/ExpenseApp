@@ -44,32 +44,20 @@ class Chart extends StatelessWidget {
         horizontal: 10,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: <Widget>[
-            Container(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.symmetric(vertical: 5),
-              child: Text(
-                'This Week\'s Spending',
-                style: Theme.of(context).textTheme.headline6,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: transactionsFromPastWeek.map((data) {
-                return Flexible(
-                  fit: FlexFit.tight,
-                  child: ChartBar(
-                      data['day'],
-                      data['amount'],
-                      weekTotalSpending == 0.0
-                          ? 0.0
-                          : (data['amount'] as double) / weekTotalSpending),
-                );
-              }).toList(),
-            ),
-          ],
+        padding: EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: transactionsFromPastWeek.map((data) {
+            return Flexible(
+              fit: FlexFit.tight,
+              child: ChartBar(
+                  data['day'],
+                  data['amount'],
+                  weekTotalSpending == 0.0
+                      ? 0.0
+                      : (data['amount'] as double) / weekTotalSpending),
+            );
+          }).toList(),
         ),
       ),
     );
