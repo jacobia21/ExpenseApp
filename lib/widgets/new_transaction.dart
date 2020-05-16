@@ -52,8 +52,12 @@ class _NewTransactionState extends State<NewTransaction> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      child: Container(
-        padding: EdgeInsets.all(10),
+      child: SingleChildScrollView(
+        padding: EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10),
         child: Column(
           children: <Widget>[
             TextField(
