@@ -26,7 +26,7 @@ class Chart extends StatelessWidget {
         'day': DateFormat.E().format(weekDay).substring(0, 1),
         'amount': totalSum,
       };
-    });
+    }).reversed.toList();
   }
 
   double get weekTotalSpending {
@@ -37,25 +37,39 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(transactionsFromPastWeek);
     return Card(
       elevation: 6,
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.symmetric(
+        vertical: 20,
+        horizontal: 10,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: transactionsFromPastWeek.map((data) {
-            return Flexible(
-              fit: FlexFit.tight,
-              child: ChartBar(
-                  data['day'],
-                  data['amount'],
-                  weekTotalSpending == 0.0
-                      ? 0.0
-                      : (data['amount'] as double) / weekTotalSpending),
-            );
-          }).toList(),
+        child: Column(
+          children: <Widget>[
+            Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: Text(
+                'This Week\'s Spending',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: transactionsFromPastWeek.map((data) {
+                return Flexible(
+                  fit: FlexFit.tight,
+                  child: ChartBar(
+                      data['day'],
+                      data['amount'],
+                      weekTotalSpending == 0.0
+                          ? 0.0
+                          : (data['amount'] as double) / weekTotalSpending),
+                );
+              }).toList(),
+            ),
+          ],
         ),
       ),
     );
