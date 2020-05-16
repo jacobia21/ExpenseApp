@@ -37,39 +37,42 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 6,
-      margin: EdgeInsets.symmetric(
-        vertical: 20,
-        horizontal: 10,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: <Widget>[
-            Container(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.symmetric(vertical: 5),
-              child: Text(
-                'This Week\'s Spending',
-                style: Theme.of(context).textTheme.headline6,
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.4,
+      child: Card(
+        elevation: 6,
+        margin: EdgeInsets.symmetric(
+          vertical: 20,
+          horizontal: 10,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.symmetric(vertical: 5),
+                child: Text(
+                  'This Week\'s Spending',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: transactionsFromPastWeek.map((data) {
-                return Flexible(
-                  fit: FlexFit.tight,
-                  child: ChartBar(
-                      data['day'],
-                      data['amount'],
-                      weekTotalSpending == 0.0
-                          ? 0.0
-                          : (data['amount'] as double) / weekTotalSpending),
-                );
-              }).toList(),
-            ),
-          ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: transactionsFromPastWeek.map((data) {
+                  return Flexible(
+                    fit: FlexFit.tight,
+                    child: ChartBar(
+                        data['day'],
+                        data['amount'],
+                        weekTotalSpending == 0.0
+                            ? 0.0
+                            : (data['amount'] as double) / weekTotalSpending),
+                  );
+                }).toList(),
+              ),
+            ],
+          ),
         ),
       ),
     );
