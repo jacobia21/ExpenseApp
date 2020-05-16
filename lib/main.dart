@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import './models/transaction.dart';
 import './widgets/transaction_list.dart';
+import './widgets/chart.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,9 +13,29 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter App',
-      home: MyHomePage(),
-    );
+        title: 'Personal Expenses',
+        home: MyHomePage(),
+        theme: ThemeData(
+          primarySwatch: Colors.red,
+          accentColor: Colors.redAccent,
+          fontFamily: 'MPlusRounded',
+          textTheme: ThemeData.light().textTheme.copyWith(
+                headline6: TextStyle(
+                  fontFamily: 'MPlusRounded',
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+          appBarTheme: AppBarTheme(
+            textTheme: ThemeData.light().textTheme.copyWith(
+                  headline6: TextStyle(
+                    fontFamily: 'PatrickHand',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+          ),
+        ));
   }
 }
 
@@ -37,20 +58,17 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  final List<Transaction> _userTransactions = [
-    Transaction(
-      id: 't1',
-      title: 'New Shoes',
-      amount: 19.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Groceries',
-      amount: 69.50,
-      date: DateTime.now(),
-    ),
-  ];
+  final List<Transaction> _userTransactions = [];
+  List<Transaction> get _recentTransactions {
+    return _userTransactions.where((transaction) {
+      return transaction.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
+
   void openSheetforNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
@@ -64,10 +82,14 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Expense App'),
+        title: Text(
+          'Personal Expenses',
+        ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.add),
+            icon: Icon(
+              Icons.add,
+            ),
             onPressed: () => openSheetforNewTransaction(context),
           ),
         ],
@@ -77,14 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              width: double.infinity,
-              child: Card(
-                color: Colors.blue,
-                child: Text('CHART!'),
-                elevation: 5,
-              ),
-            ),
+            Chart(_recentTransactions),
             TransactionList(_userTransactions),
           ],
         ),
