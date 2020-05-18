@@ -16,6 +16,8 @@ class _NewTransactionState extends State<NewTransaction> {
   final _amountController = TextEditingController();
   DateTime _selectedDate;
 
+  _NewTransactionState();
+
   void _submitData() {
     if (_amountController.text.isEmpty) {
       return;
@@ -56,10 +58,11 @@ class _NewTransactionState extends State<NewTransaction> {
       elevation: 5,
       child: SingleChildScrollView(
         padding: EdgeInsets.only(
-            top: 10,
-            left: 10,
-            right: 10,
-            bottom: MediaQuery.of(context).viewInsets.bottom + 10),
+          top: 10,
+          left: 10,
+          right: 10,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+        ),
         child: Column(
           children: <Widget>[
             TextField(
